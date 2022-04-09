@@ -67,16 +67,16 @@ export const updatePattern = (color) => {
     document.querySelector(elementStrings.pattern).value = update;
 }
 
-export const renderOne = (type) => {
+export const renderOne = (type) => {  //
     let markup = markups.one.replace(placeholders.buttonLevel, `${type}--one`);
     if (type === 'login') {
-        markup = markup.replace(placeholders.description, replacements.oneLD);
+        markup = markup.replace(placeholders.description, replacements.oneLD);//
         elements.login.innerHTML = markup;
     } else if (type === 'register') {
         markup = markup.replace(placeholders.description, replacements.oneRD);
         elements.register.innerHTML = markup;
     }
-    
+
 };
 
 export const renderTwo = (type) => {

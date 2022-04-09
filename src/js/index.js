@@ -24,9 +24,9 @@ elements.register.addEventListener('click', e => {
         const created = rLevelOne(state.users);
         if(created) {
             clear();
-            renderTwo('register');  
+            renderThree('register');
         }
-    } 
+    }
 
     //2. RGB Pattern
     if(e.target.matches(elementStrings.icon)) {
@@ -46,7 +46,7 @@ elements.register.addEventListener('click', e => {
             }
         }
     }
-    
+
     //3. Grid
     if(e.target.matches(elementStrings.nextHR)) {
         rLevelThree();
@@ -58,9 +58,24 @@ elements.register.addEventListener('click', e => {
 
 const rLevelOne = (users) => {
     if(document.querySelector(elementStrings.formOne).checkValidity()) {
+      const pattern = document.querySelector(elementStrings.pattern).value;
+      if(pattern === '') {
+          swal('Color pattern cannot be empty! Please click on the color icons to choose a pattern.');
+          return false;
+
+      } else if(pattern.length < 6) {
+          swal('Color pattern must contain at least 2 colors!');
+          clearFields();
+          return false;
+
+      } else {
+          state.current.addPattern(pattern);
+          return true;
+      }
         const unique = state.current.addUsernameAndPassword(
-            document.querySelector(elementStrings.username).value, 
-            document.querySelector(elementStrings.password).value,
+
+            document.querySelector(elementStrings.username).value,
+            document.querySelector(elementStrings.pattern).value,
             users.getAllUsers()
         );
         if(!unique) {
@@ -98,7 +113,7 @@ const rLevelThree = () => {
     cellsArr.forEach(el => {
         if(el.firstChild) {
             grid += `${el.id}${el.firstChild.id}`
-            
+
         }
     });
     state.current.addGrid(grid);
@@ -117,7 +132,7 @@ elements.login.addEventListener('click', e => {
         const passwordMatch = oLevelOne(state.users);
         if(passwordMatch) {
             clear();
-            renderTwo('login');  
+            renderTwo('login');
         }
     }
 
@@ -167,7 +182,7 @@ const oLevelOne = (users) => {
             swal('Username and password do not match!');
             return false;
         }
-        
+
         return true;
     }
 };
@@ -192,7 +207,7 @@ const oLevelThree = () => {
     cellsArr.forEach(el => {
         if(el.firstChild) {
             grid += `${el.id}${el.firstChild.id}`
-            
+
         }
     });
     const match = state.current.compareGrid(grid);

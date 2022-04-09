@@ -5,13 +5,13 @@ export default class Users {
 
     getAllUsers() {
         return this.users;
-    }; 
-    
+    };
+
     addUser(user) {
         this.users.push(user);
         localStorage.setItem('users', JSON.stringify(this.users));
     };
-    
+
     restore() {
         const storage = JSON.parse(localStorage.getItem('users'));
         if(storage) {
